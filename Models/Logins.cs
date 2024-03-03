@@ -18,5 +18,6 @@ namespace MVCJatkoApp2.Models
         public string UserName { get; set; }
         public string PassWord { get; set; }
         public Nullable<int> admin { get; set; }
-    }
+        public string LoginErrorMessage { get; set; }
+}
 }
