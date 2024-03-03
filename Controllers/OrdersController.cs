@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVCJatkoApp2.Models;
+using MVCJatkoApp2.ViewModels;
 
 namespace MVCJatkoApp2.Controllers
 {
@@ -135,6 +136,51 @@ namespace MVCJatkoApp2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Ordersummary()
+        {
+            var orderSummary = from o in db.Orders
+                               join od in db.Order_Details on o.OrderID equals od.OrderID
+                               join p in db.Products on od.ProductID equals p.ProductID
+                               join c in db.Categories on p.CategoryID equals c.CategoryID
+                               //where-lause
+                               //orderby-lause
+                               select new OrderSummaryData
+                               {
+                                   OrderID = o.OrderID,
+                                   CustomerID = o.CustomerID,
+                                   EmployeeID = (int)o.EmployeeID,
+                                   OrderDate = (DateTime)o.OrderDate,
+                                   RequiredDate = (DateTime)o.RequiredDate,
+                                   ShippedDate = (DateTime)o.ShippedDate,
+                                   ShipVia = (int)o.ShipVia,
+                                   Freight = (float)o.Freight,
+                                   ShipName = o.ShipName,
+                                   ShipAddress = o.ShipName,
+                                   ShipCity = o.ShipCity,
+                                   ShipRegion = o.ShipRegion,
+                                   ShipPostalCode = o.ShipPostalCode,
+                                   ShipCountry = o.ShipCountry,
+                                   ProductID = p.ProductID,
+                                   UnitPrice = (float)p.UnitPrice,
+                                   Quantity = (int)od.Quantity,
+                                   Discount = (float)od.Discount,
+                                   ProductName = p.ProductName,
+                                   SupplierID = (int)p.SupplierID,
+                                   CategoryID = (int)c.CategoryID,
+                                   QuantityPerUnit = p.QuantityPerUnit,
+                                   UnitsInStock = (int)p.UnitsInStock,
+                                   UnitsOnOrder = (int)p.UnitsOnOrder,
+                                   ReorderLevel = (int)p.ReorderLevel,
+                                   Discontinued = p.Discontinued,
+                                   CategoryName = c.CategoryName,
+                                   Description = c.Description,
+                                   //Picture = (Image)c.Picture
+                               };
+
+
+            return View(orderSummary);
         }
     }
 }
