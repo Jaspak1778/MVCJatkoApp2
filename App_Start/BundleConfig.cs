@@ -23,7 +23,7 @@ namespace MVCJatkoApp2
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstraplum.css",
                       "~/Content/site.css"));
         }
     }

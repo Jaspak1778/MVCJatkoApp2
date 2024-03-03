@@ -3,37 +3,111 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>@ViewBag.Title NORTHWIND </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <!---Haetaan nykyinen controlleri-->
+    @{
+        string currentController = ViewContext.RouteData.Values["controller"].ToString();
+    }
+
+    <!--Yllä olevaan ei tarvitse koskea-->
 </head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+<body style="margin: -1px">
+
+    <!--Navbar osio-->
+
+    @if (Session["UserName"] != null)
+    {
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="~/Home/Index">NW</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index">
+                                Aloitus
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customers/Index">Asiakkaat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Products/Index">Tuotteet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Orders/Index">Tilaukset</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Suppliers/Index">Toimittajat</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Lisätoiminnot</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/Tilausrivitdb/Index">Tilausrivit</a>
+                                <a class="dropdown-item" href="/Logins/Index">Käyttäjät</a>
+                                <!-- <div class="dropdown-divider"></div> -->
+                                <!-- a class="dropdown-item" href="#">Separated link</!--a> -->
+                            </div>
+                        </li>
+                    </ul>
+                    <!--Search-->
+                    <form class="search-form d-flex" style="margin-right:30%">
+                        @using (Html.BeginForm("Index", currentController, new { id = ViewBag.id }, FormMethod.Get))
+                        {
+                            <div class="input-group">
+                                @Html.TextBox("searchString1", ViewBag.currentFilter1 as string, new { @class = "form-control", placeholder = "Etsi" })
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Etsi</button>
+                                </div>
+                            </div>
+                        }
+                    </form>
+
+
+                    <h5 style="color: white "><a style="margin: 40px"> Kirjautuneena: @Session["UserName"] </a></h5>
+                    <a class="btn btn-outline-light" href="~/Home/LogOut"> Kirjaudu ulos</a>
+
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    }
+    @if (Session["UserName"] == null)
+    {
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">NW</a>
+            </div>
+        </nav>
+    }
+    <!--Navbar osio loppuu-->
+    <!---Renderöinti osio alkaa -->
+
     <div class="container body-content">
         @RenderBody()
+
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <h6>@DateTime.Now.ToString("dddd") - @DateTime.Now.ToString("MMMM") - @DateTime.Now.ToString("yyy") NORTHWIND DB (mvc jatko kurssi 24 )©Jani Pekkala 2023-2024</h6>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <!---Renderöinti osio loppuu -->
 </body>
 </html>
