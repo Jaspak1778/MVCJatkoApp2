@@ -1,33 +1,111 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model MVCJatkoApp2.Models.Logins
+@{
+    ViewBag.Title = "Kotisivu";
 }
+<style>
+    main {
+        margin: 1px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+    section {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 
-    <div class="row">
+    .right-section {
+        width: 100%;
+        float: none;
+    }
+
+        .right-section h5,
+        .right-section img,
+        .right-section p {
+            text-align: center;
+        }
+
+    @@media (min-width: 768px) {
+        section {
+            width: 48%;
+        }
+
+        .right-section {
+            width: 48%;
+            float: right;
+        }
+
+            .right-section h5,
+            .right-section img,
+            .right-section p {
+                text-align: right;
+            }
+    }
+</style>
+
+<body background="/Images/bgr1.jpeg">
+
+    <main>
+
         <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            <h1>TilausDB hallinta</h1>
+            <p></p>
+            <h3>Pikalinkit</h3>
+
+            @if (Session["UserName"] == null)
+            {
+                <div class="table table-hover; row mb-1">
+                    <a class="btn btn-primary" id="LoginButton">Kirjaudu</a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Tuotteetdb/CardIndex"> Esittelynäkymä </a>
+                    <p></p>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            }
+            else
+            {
+                <div class="table table-hover; row mb-1">
+                    <a class="btn btn-primary" href="/Tuotteetdb/CardIndex">Esittelynäkymä </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Asiakkaatdb/Index"> Asiakkaat </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Asiakkaatdb/Create">Lisää asiakas </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Tuotteetdb/Index"> Tuotteet </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Tuotteetdb/Create"> Lisää tuote </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Tilauksetdb/Index"> Tilaukset </a>
+                </div>
+            }
         </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+        <section>
+            <h5>HUOLTO, NEUVONTA JA TUKI</h5>
+            <a target="_blank" href="https://careeria.fi/asiakastyot/ict-alan-tyot-huolto-neuvonta-ja-tuki/">
+                <img src="~/Images/Careera.png" alt="Careera.png" width="300" height="100" target="_blank">
+            </a>
+            <p><a style="height:50px; width:300px" class="btn btn-outline-primary" href="/Home/About" target="_blank">Ylläpidon yhteystiedot</a></p>
         </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
-</main>
+
+    </main>
+</body>
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#LoginButton').click(function () {
+                $('#LoginRuutu').modal('show');
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}
+@{
+    Html.RenderPartial("_LoginModal");
+}
