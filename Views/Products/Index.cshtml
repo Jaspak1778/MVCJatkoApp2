@@ -1,81 +1,48 @@
 ﻿@model IEnumerable<MVCJatkoApp2.Models.Products>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Nyt tämä näyttää Products viewiä";
 }
 
-<h2>Index</h2>
+<h2>Products</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<a class="btn btn-primary btm-sm" href="/Products/Create"><img src="~/Icons/person-fill-add.svg" style="margin-right:10px" /></a>
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuantityPerUnit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitsInStock)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitsOnOrder)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReorderLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discontinued)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Categories.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Suppliers.CompanyName)
-        </th>
+        <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+        <th>@Html.DisplayNameFor(model => model.QuantityPerUnit)</th>
+        <th>@Html.DisplayNameFor(model => model.UnitPrice)</th>
+        <th>@Html.DisplayNameFor(model => model.UnitsInStock)</th>
+        <th>@Html.DisplayNameFor(model => model.UnitsOnOrder)</th>
+        <th>@Html.DisplayNameFor(model => model.ReorderLevel)</th>
+        <th>@Html.DisplayNameFor(model => model.Discontinued)</th>
+        <th>@Html.DisplayNameFor(model => model.Categories.CategoryName)</th>
+        <th>@Html.DisplayNameFor(model => model.Suppliers.CompanyName)</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuantityPerUnit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitsInStock)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitsOnOrder)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReorderLevel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discontinued)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categories.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Suppliers.CompanyName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+            <td>@Html.DisplayFor(modelItem => item.QuantityPerUnit)</td>
+            <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
+            <td>@Html.DisplayFor(modelItem => item.UnitsInStock)</td>
+            <td>@Html.DisplayFor(modelItem => item.UnitsOnOrder)</td>
+            <td>@Html.DisplayFor(modelItem => item.ReorderLevel)</td>
+            <td>@Html.DisplayFor(modelItem => item.Discontinued)</td>
+            <td>@Html.DisplayFor(modelItem => item.Categories.CategoryName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Suppliers.CompanyName)</td>
+
+            <td>
+                <a class="btn btn-outline-dark" href="/Products/Edit?id=@item.ProductID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Products/Details?id=@item.ProductID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Products/Delete?id=@item.ProductID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
+            </td>
+        </tr>
+    }
 
 </table>
+

@@ -22,6 +22,13 @@ namespace MVCJatkoApp2.Controllers
             return View(orders.ToList());
         }
 
+        public ActionResult TilausOtsikot()
+        {
+            var orders = db.Orders.Include(o => o.Customers).Include(o => o.Employees).Include(o => o.Shippers);
+            return View(orders.ToList());
+        }
+
+
         // GET: Orders/Details/5
         public ActionResult Details(int? id)
         {

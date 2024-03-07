@@ -15,10 +15,17 @@ namespace MVCJatkoApp2.Controllers
         private NorthwindEntity db = new NorthwindEntity();
 
         // GET: Products
-        public ActionResult Index()
-        {
-            var products = db.Products.Include(p => p.Categories).Include(p => p.Suppliers);
-            return View(products.ToList());
+        public ActionResult Index(string currentFilter1, string searchString1)
+        {/*
+            return View(db.Tuotteet.ToList());
+         */
+            var tuotteet = from p in db.Products
+                           select p;
+            if (!String.IsNullOrEmpty(searchString1))
+            {
+                tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1));
+            }
+            return View(tuotteet);
         }
 
         // GET: Products/Details/5
