@@ -189,5 +189,44 @@ namespace MVCJatkoApp2.Controllers
 
             return View(orderSummary);
         }
+
+        public ActionResult _TilausRivit(int? orderid)
+        {
+            if ((orderid == null) || (orderid == 0))
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                var orderRowsList = from od in db.Order_Details
+                                    join p in db.Products on od.ProductID equals p.ProductID
+                                    join c in db.Categories on p.CategoryID equals c.CategoryID
+                                    where od.OrderID == orderid
+                                    //orderby-lause
+                                    select new OrderRows
+                                    {
+                                        OrderID = od.OrderID,
+                                        ProductID = p.ProductID,
+                                        UnitPrice = (float)p.UnitPrice,
+                                        Quantity = (int)od.Quantity,
+                                        Discount = (float)od.Discount,
+                                        ProductName = p.ProductName,
+                                        SupplierID = (int)p.SupplierID,
+                                        CategoryID = (int)c.CategoryID,
+                                        QuantityPerUnit = p.QuantityPerUnit,
+                                        UnitsInStock = (int)p.UnitsInStock,
+                                        UnitsOnOrder = (int)p.UnitsOnOrder,
+                                        ReorderLevel = (int)p.ReorderLevel,
+                                        Discontinued = p.Discontinued,
+                                        CategoryName = c.CategoryName,
+                                        Description = c.Description,
+                                        
+                                    };
+                return PartialView(orderRowsList);
+            }
+
+        }
+
     }
 }
+
