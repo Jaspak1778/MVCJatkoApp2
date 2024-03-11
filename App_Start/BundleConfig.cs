@@ -24,7 +24,7 @@ namespace MVCJatkoApp2
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstraplum.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }

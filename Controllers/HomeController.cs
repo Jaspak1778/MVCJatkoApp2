@@ -9,8 +9,10 @@ using MVCJatkoApp2.Models;
 
 namespace MVCJatkoApp2.Controllers
 {
+    
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             ViewBag.LoginError = 0; //Ei pakoteta modaalia login-ruutua tässä kohden, vaan pelkästään, jos on yritetty kirjautua ja kirjautuminen on epäonnistunut
@@ -37,7 +39,6 @@ namespace MVCJatkoApp2.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Authorize(Logins LoginModel)
         {
             NorthwindEntity db = new NorthwindEntity();
@@ -47,7 +48,6 @@ namespace MVCJatkoApp2.Controllers
             {
                 ViewBag.LoginMessage = "Successfull login";
                 ViewBag.LoggedStatus = "In";
-                ViewBag.LoginError = 0; //Ei virhettä...
                 Session["UserName"] = LoggedUser.UserName;
                 Session["LoginID"] = LoggedUser.LoginId;
                 //Session["AccessLevel"] = LoggedUser.AccessLevel;
@@ -57,20 +57,16 @@ namespace MVCJatkoApp2.Controllers
             {
                 ViewBag.LoginMessage = "Login unsuccessfull";
                 ViewBag.LoggedStatus = "Out";
-                ViewBag.LoginError = 1; //Pakotetaan modaali login-ruutu uudelleen koska kirjautumisyritys on epäonnistunut
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana.";
-                //return View("Login", LoginModel);
-                return View("Index", LoginModel);
+                return View("Login", LoginModel);
             }
         }
-
         public ActionResult LogOut()
         {
             Session.Abandon();
             ViewBag.LoggedStatus = "Out";
             return RedirectToAction("Index", "Home"); //Uloskirjautumisen jälkeen pääsivulle
         }
-
     }
 
 }

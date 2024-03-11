@@ -2,12 +2,26 @@
 @{
     ViewBag.Title = "Kotisivu";
 }
+<script>
+    $(document).ready(function () {
+        $('#CalButton').click(function () {
+            $('#Calendar').modal('show');
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 <style>
     main {
         margin: 1px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+    }
+
+
+    body {
+        background-color: rgba(215, 115, 30, 0.06);
     }
 
     section {
@@ -44,14 +58,14 @@
     }
 </style>
 
-<body background="/Images/bgr1.jpeg">
+<body>
 
     <main>
 
         <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h1>TilausDB hallinta</h1>
+            <h1 style="text-shadow:3px 3px white">NORTHWIND hallinta</h1>
             <p></p>
-            <h3>Pikalinkit</h3>
+            <h3>_</h3>
 
             @if (Session["UserName"] == null)
             {
@@ -67,21 +81,22 @@
             }
             else
             {
-        <div class="table table-hover; row mb-1">
-            <a class="btn btn-primary" href="/Products/CardIndex">Esittelynäkymä </a>
-            <p></p>
-            <a class="btn btn-primary" href="/Customers/Index"> Asiakkaat </a>
-            <p></p>
-            <a class="btn btn-primary" href="/Customers/Create">Lisää asiakas </a>
-            <p></p>
-            <a class="btn btn-primary" href="/Products/Index"> Tuotteet </a>
-            <p></p>
-            <a class="btn btn-primary" href="/Products/Create"> Lisää tuote </a>
-            <p></p>
-            <a class="btn btn-primary" href="/Orders/Index"> Tilaukset </a>
-            <p></p>
-            <a class="btn btn-primary" href="/Orders/TilausOtsikot"> Tilausotsikot </a>
-        </div>
+                <div class="table table-hover; row mb-1">
+                    <a class="btn btn-primary" href="/Products/CardIndex">Esittelynäkymä </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Customers/Index"> Asiakkaat </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Customers/Create">Lisää asiakas </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Products/Index"> Tuotteet </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Products/Create"> Lisää tuote </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Orders/Index"> Tilaukset </a>
+                    <p></p>
+                    <a class="btn btn-primary" href="/Orders/TilausOtsikot"> Tilausotsikot </a>
+
+                </div>
             }
         </section>
 
@@ -106,8 +121,15 @@
 
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        $(document).ready(function () {
+            $('#CalButton').click(function () {
+                $('#Calendar').modal('show');
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 }
-@{
-    Html.RenderPartial("_LoginModal");
-}
+@{Html.RenderPartial("_LoginModal");}
+@{Html.RenderPartial("_Calendar");}

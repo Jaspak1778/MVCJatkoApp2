@@ -1,84 +1,93 @@
 ﻿@model IEnumerable<MVCJatkoApp2.Models.Orders>
+
+@using System.Globalization
+@using System;
+@using System.Collections.Generic;
+@using System.Data;
+
 @{
     ViewBag.Title = "TilausOtsikot";
 }
 
-@section scripts {
-    <script type="text/javascript">
-        $(function () {
-            $(".showOrderClass").click(function () {
-                let orderId = $(this).data("orderid");
-                //alert("Klikkasit tilausnumeroa: " + orderId);
-                var url = "/Orders/_TilausRivit/?OrderID=" + orderId;
-                $("#orderDetails_" + orderId).append(" <b>Ladataan tilauksen " + orderId + " rivejä...</b>");
-                var $detailDiv = $("#orderDetails_" + orderId);
-                $.get(url, function (data) {
-                    $detailDiv.replaceWith(data);
-                });
-
-            });
-        });
-    </script>
-}
-
-
-<h2>TilausOtsikot</h2>
+<h2>Tilaus Otsikot</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<div class="container-fluid">
-    <div class="card-header">
-        <form class="mb-3">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-secondary font-weight-bold">Order</span>
-                </div>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Customer" disabled>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="ShipName" disabled>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="ShipAddress" disabled>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="ShipCity" disabled>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="ShipCountry" disabled>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="ShipRegion" disabled>
-                <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Shipper" disabled>
-            </div>
-        </form>
-        </a>
-    </div>
 
-    <div id="accordion">
-        @foreach (var item in Model)
-        {
-            <div class="card">
-                <div class="card-header">
-                    <!--BS5-->
-                    <a class="card-link showOrderClass" data-orderid="@item.OrderID" data-bs-toggle="collapse" href="#collapse_@item.OrderID">
-                        <form>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@item.OrderID</span>
-                                </div>
-                                @*<label class="px-2" for="usr">@Html.DisplayNameFor(model => model.Customers.CompanyName):</label>*@
-                                <input type="text" class="form-control px-2" value="@item.Customers.CompanyName" disabled>
-                                <input type="text" class="form-control px-2" value="@item.ShipName" disabled>
-                                <input type="text" class="form-control px-2" value="@item.ShipAddress" disabled>
-                                <input type="text" class="form-control px-2" value="@item.ShipCity" disabled>
-                                <input type="text" class="form-control px-2" value="@item.ShipCountry" disabled>
-                                <input type="text" class="form-control px-2" value="@item.ShipRegion" disabled>
-                                <input type="text" class="form-control px-2" value="@item.Shippers.CompanyName" disabled>
-                            </div>
-                        </form>
-                    </a>
-                </div>
-                <!--BS5-->
-                <div id="collapse_@item.OrderID" class="collapse" data-bs-parent="#accordion">
-                    <div class="card-body">
-                        <!--jQuery renderöi tilauksen rivitiedot-->
-                        <div id="orderDetails_@item.OrderID"></div>
-                    </div>
-                </div>
-            </div>
-        }
+<div class="container">
+    <div class="row">
+        <div class="col">
+            OrderID
+        </div>
+        <div class="col">
+            CompanyName
+        </div>
+        <div class="col">
+            ShipCity
+        </div>
+        <div class="col">
+            ShipCountry
+        </div>
+        <div class="col">
+            Date
+        </div>
     </div>
 </div>
 
+        <div class="accordion" id="accordionExample">
+            @foreach (var item in Model)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading@(item.OrderID)">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(item.OrderID)" aria-expanded="true" aria-controls="collapse@(item.OrderID)">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>@item.OrderID</p>
+                                    </div>
+                                    <div class="col">
+                                        <p>@item.Customers.CompanyName</p>
+                                    </div>
+                                    <div class="col">
+                                        <p>@item.ShipCity</p>
+                                    </div>
+                                    <div class="col">
+                                        <p>@item.ShipCountry</p>
+                                    </div>
+                                    <div class="col">
+                                        @{
+                                            var formattedDate = item.OrderDate?.ToString("dd MMMM, yyyy");
+                                            @formattedDate
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse@(item.OrderID)" class="accordion-collapse collapse" aria-labelledby="heading@(item.OrderID)" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div id="orderDetails_@(item.OrderID)">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @section scripts {
+            <script>
+                $(function () {
+                    $(".accordion-button").click(function () {
+                        let orderId = $(this).closest(".accordion-item").find(".accordion-header").attr("id").substring(7);
+                        var url = "/Orders/_TilausRivit/?OrderID=" + orderId;
+                        var $orderDetails = $(this).closest(".accordion-item").find(".accordion-body #orderDetails_" + orderId);
+                        $orderDetails.empty().append(" <b>Ladataan tilauksen " + orderId + " rivejä...</b>");
+                        $.get(url, function (data) {
+                            $orderDetails.html(data);
+                        });
+                    });
+                });
+            </script>
+        }

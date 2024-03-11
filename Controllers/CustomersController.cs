@@ -10,17 +10,21 @@ using MVCJatkoApp2.Models;
 
 namespace MVCJatkoApp2.Controllers
 {
+    [CheckSession]
     public class CustomersController : Controller
-    {
+    {   
+
         private NorthwindEntity db = new NorthwindEntity();
 
         // GET: Customers
+
         public ActionResult Index()
         {
             return View(db.Customers.ToList());
         }
 
         // GET: Customers/Details/5
+
         public ActionResult Details(string id)
         {
             if (id == null)
