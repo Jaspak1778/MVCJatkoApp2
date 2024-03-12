@@ -20,11 +20,15 @@ namespace MVCJatkoApp2
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/gijgo/combined.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstraplum.css",
-                      "~/Content/Site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/gijgo/combined/gijgo.css"
+                
+            ));
         }
     }
 }
