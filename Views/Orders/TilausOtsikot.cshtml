@@ -66,6 +66,7 @@
                         </button>
                     </h2>
                     <div id="collapse@(item.OrderID)" class="accordion-collapse collapse" aria-labelledby="heading@(item.OrderID)" data-bs-parent="#accordionExample">
+                        <a class="btn btn-outline-dark" @Html.ActionLink("Edit", "Edit", new {id=item.OrderID})><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
                         <div class="accordion-body">
                             <div id="orderDetails_@(item.OrderID)">
 

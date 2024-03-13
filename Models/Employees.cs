@@ -19,6 +19,7 @@ namespace MVCJatkoApp2.Models
         {
             this.Employees1 = new HashSet<Employees>();
             this.Orders = new HashSet<Orders>();
+            this.Territories = new HashSet<Territories>();
         }
     
         public int EmployeeID { get; set; }
@@ -43,5 +44,7 @@ namespace MVCJatkoApp2.Models
         public virtual Employees Employees2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Territories> Territories { get; set; }
     }
 }

@@ -4,102 +4,168 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
+@*JQuery, joka suoritetaan, kun klikataan getOrderId-luokan mukaista elementtiä*@
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".getOrderId").click(function () {
+                let orderId = $(this).data("orderid");
+                console.log("Klikkasit tilausnumeroa: " + orderId);
+                var url = "/Orders/_ModalEdit/?id=" + orderId;
+                console.log(url);
+
+                let $detailDivEdit = $("#orderEdit");
+
+                $detailDivEdit.append(" <b>Avataan tilauksen " + orderId + " muokkausikkuna...</b>");
+
+                $.get(url, function (data) {
+                    $detailDivEdit.replaceWith(data);
+                    $('#ModalOrderEdit').modal('show');
+                });
+            });
+        });
+
+        $(function () {
+            $(".creNewOrder").click(function () {
+                console.log("Klikkasit uuden tilauksen luontipainiketta: ");
+                var url = "/Orders/_ModalCreate";
+                console.log(url);
+
+                $("#orderCreate").append(" <b>Avataan tilauksen luonti-ikkuna...</b>");
+
+                var $detailDivCreate = $("#orderCreate");
+                $.get(url, function (data) {
+                    $detailDivCreate.replaceWith(data);
+                    $('#ModalOrderCreate').modal('show');
+                });
+            });
+        });
+
+        $(function () {
+            $(".delOrderId").click(function () {
+                let orderId = $(this).data("orderid");
+                console.log("Klikkasit poistettavaa tilausnumeroa: " + orderId);
+                var url = "/Orders/_ModalDelete/?id=" + orderId;
+                console.log(url);
+
+                $("#orderDelete").append(" <b>Avataan tilauksen " + orderId + " poistoikkuna...</b>");
+
+                var $detailDivDelete = $("#orderDelete");
+                $.get(url, function (data) {
+                    $detailDivDelete.replaceWith(data);
+                    $('#ModalOrderDelete').modal('show');
+                });
+            });
+        });
+
+        function deleteOrder(deletedOrderId) {
+                alert("Päätit poistaa tilauksen: " + deletedOrderId);
+                var deleteurl = "/Orders/DeleteFromJQuery/?id=" + deletedOrderId;
+                console.log(deleteurl);
+
+                var ok = confirm("Haluatko varmasti poistaa asiakkaan " + deletedOrderId + "?");
+
+                if (ok == true) {
+                    $.getJSON(deleteurl, null, function (status) {
+                        if (status == true) {
+                            alert("Tilaus on nyt poistettu!");
+                            $('#ModalOrderDelete').modal('hide');
+                            RefreshOrderList();
+                        }
+                        else {
+                            alert("Poistaminen ei onnistunut, yritä uudelleen!");
+                        }
+                    });
+                }
+        }
+
+        function RefreshOrderList() {
+            console.log("ennen ajaxia refresh");
+            $.ajax({
+                type: "GET",
+                url: "/Orders/Index",
+                success: function (result) {
+                    console.log("resultti tuli " + result);
+                    //$(document).replaceAll(result);
+                    document.open();
+                    document.write(result);
+                    document.close();
+                }
+            });
+        }
+
+    </script>
+}
+
+
+<h2>Index</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Tilausten yhteenveto", "Ordersummary")
 </p>
+<p>
+    @Html.ActionLink("Tilausotsikot - tilausrivit", "TilausOtsikot")
+</p>
+<p>
+    <a class="btn btn-primary btm-sm" href="/Orders/Create"><img src="~/Icons/plus.svg" style="margin-right:10px" /></a>
+</p>
+
+
+
+<div id="orderEdit"></div>
+<div id="orderDelete"></div>
+<div id="orderCreate"></div>
+
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequiredDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShippedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Freight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipCity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipRegion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipPostalCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipCountry)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Customers.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Employees.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Shippers.CompanyName)
-        </th>
+        <th><button class="creNewOrder fas fa-plus-square"></button></th>
+        <th>@Html.DisplayNameFor(model => model.OrderDate)</th>
+        <th>@Html.DisplayNameFor(model => model.RequiredDate)</th>
+        <th>@Html.DisplayNameFor(model => model.ShippedDate)</th>
+        <th>@Html.DisplayNameFor(model => model.Freight)</th>
+        <th>@Html.DisplayNameFor(model => model.ShipName)</th>
+        <th>@Html.DisplayNameFor(model => model.ShipAddress)</th>
+        <th>@Html.DisplayNameFor(model => model.ShipCity)</th>
+        <th>@Html.DisplayNameFor(model => model.ShipRegion)</th>
+        <th>@Html.DisplayNameFor(model => model.ShipPostalCode)</th>
+        <th>@Html.DisplayNameFor(model => model.ShipCountry)</th>
+        <th>@Html.DisplayNameFor(model => model.Customers.CompanyName)</th>
+        <th>@Html.DisplayNameFor(model => model.Employees.LastName)</th>
+        <th>@Html.DisplayNameFor(model => model.Shippers.CompanyName)</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequiredDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShippedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Freight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShipName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShipAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShipCity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShipRegion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShipPostalCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShipCountry)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customers.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employees.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Shippers.CompanyName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrderID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OrderID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OrderID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><button class="getOrderId fas fa-edit" data-orderid="@item.OrderID"></button><button class="delOrderId fas fa-trash-alt" data-orderid="@item.OrderID"></button></td>
+            <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.RequiredDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShippedDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.Freight)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShipName)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShipAddress)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShipCity)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShipRegion)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShipPostalCode)</td>
+            <td>@Html.DisplayFor(modelItem => item.ShipCountry)</td>
+            <td>@Html.DisplayFor(modelItem => item.Customers.CompanyName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Employees.LastName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Shippers.CompanyName)</td>
+            <td>
+                <a class="btn btn-outline-dark" href="/Orders/Edit?id=@item.OrderID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Orders/Details?id=@item.OrderID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Orders/Delete?id=@item.OrderID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+
+@*Modal -tyyppisen ikkunan avauspainike*@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrderEditModal">Avaa Modal-ikkuna</button>
+
+

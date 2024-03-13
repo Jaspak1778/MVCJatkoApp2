@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.Products.ProductName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <a class="btn btn-outline-dark" href="/Order_Details/Edit?id=@item.OrderID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
+            <a class="btn btn-outline-dark" href="/Order_Details/Details?id=@item.OrderID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
+            <a class="btn btn-outline-dark" href="/Order_Details/Delete?id=@item.OrderID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
         </td>
     </tr>
 }

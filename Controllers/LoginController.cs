@@ -18,7 +18,7 @@ namespace MVCJatkoApp2.Controllers
             base.OnActionExecuting(filterContext);
         }
     }
-    public class CheckAdminAttribute : ActionFilterAttribute
+    /*public class CheckAdminAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -44,7 +44,7 @@ namespace MVCJatkoApp2.Controllers
 
             base.OnActionExecuting(filterContext);
         }
-    }
+    }*/
 
 
     public class LoginController : Controller

@@ -68,9 +68,14 @@
             <td>@Html.DisplayFor(modelItem => item.UnitsOnOrder)</td>
             <td>@Html.DisplayFor(modelItem => item.ReorderLevel)</td>
             <td>@Html.DisplayFor(modelItem => item.Discontinued)</td>
-            
+
             <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
             <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>
+                <a class="btn btn-outline-dark" href="/Orders/Edit?id=@item.OrderID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Orders/Details?id=@item.OrderID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Orders/Delete?id=@item.OrderID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
+            </td>
         </tr>
     }
 

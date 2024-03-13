@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Employees</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -29,30 +29,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
 
-    <tr>
-        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-        <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-        <td>@Html.DisplayFor(modelItem => item.Title)</td>
-        <td>@Html.DisplayFor(modelItem => item.TitleOfCourtesy)</td>
-        <td>@Html.DisplayFor(modelItem => item.BirthDate)</td>
-        <td>@Html.DisplayFor(modelItem => item.HireDate)</td>
-        <td>@Html.DisplayFor(modelItem => item.Address)</td>
-        <td>@Html.DisplayFor(modelItem => item.City)</td>
-        <td>@Html.DisplayFor(modelItem => item.Region)</td>
-        <td>@Html.DisplayFor(modelItem => item.PostalCode)</td>
-        <td>@Html.DisplayFor(modelItem => item.Country)</td>
-        <td>@Html.DisplayFor(modelItem => item.HomePhone)</td>
-        <td>@Html.DisplayFor(modelItem => item.Extension)</td>
-        <td>@Html.DisplayFor(modelItem => item.Notes)</td>
-        <td>@Html.DisplayFor(modelItem => item.Employees2.LastName)</td>
-        <td>
-            <a class="btn btn-outline-dark" href="/Employees/Edit?id=@item.EmployeeID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
-            <a class="btn btn-outline-dark" href="/Employees/Details?id=@item.EmployeeID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
-            <a class="btn btn-outline-dark" href="/Employees/Delete?id=@item.EmployeeID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
-        </td>
-    </tr>
-}
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.TitleOfCourtesy)</td>
+            <td>@Html.DisplayFor(modelItem => item.BirthDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.HireDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+            <td>@Html.DisplayFor(modelItem => item.City)</td>
+            <td>@Html.DisplayFor(modelItem => item.Region)</td>
+            <td>@Html.DisplayFor(modelItem => item.PostalCode)</td>
+            <td>@Html.DisplayFor(modelItem => item.Country)</td>
+            <td>@Html.DisplayFor(modelItem => item.HomePhone)</td>
+            <td>@Html.DisplayFor(modelItem => item.Extension)</td>
+            <td>@Html.DisplayFor(modelItem => item.Notes)</td>
+            <td>@Html.DisplayFor(modelItem => item.Employees2.LastName)</td>
+            <td>
+                <a class="btn btn-outline-dark" href="/Employees/Edit?id=@item.EmployeeID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Employees/Details?id=@item.EmployeeID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
+                <a class="btn btn-outline-dark" href="/Employees/Delete?id=@item.EmployeeID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
+            </td>
+        </tr>
+    }
 
 </table>

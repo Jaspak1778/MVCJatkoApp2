@@ -139,6 +139,9 @@
     <Compile Include="Models\Categories.cs">
       <DependentUpon>NorthwindModel1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerDemographics.cs">
+      <DependentUpon>NorthwindModel1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customers.cs">
       <DependentUpon>NorthwindModel1.tt</DependentUpon>
     </Compile>
@@ -2455,6 +2458,9 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Orders\IndexOriginal.cshtml" />
+    <Content Include="Views\Orders\_ModalEdit.cshtml" />
+    <Content Include="Views\Home\Index4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

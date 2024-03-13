@@ -10,7 +10,6 @@ using MVCJatkoApp2.Models;
 
 namespace MVCJatkoApp2.Controllers
 {
-    [CheckSession]
     public class EmployeesController : Controller
     {
         private NorthwindEntity db = new NorthwindEntity();
