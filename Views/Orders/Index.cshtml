@@ -60,24 +60,24 @@
         });
 
         function deleteOrder(deletedOrderId) {
-                alert("Päätit poistaa tilauksen: " + deletedOrderId);
-                var deleteurl = "/Orders/DeleteFromJQuery/?id=" + deletedOrderId;
-                console.log(deleteurl);
+            alert("Päätit poistaa tilauksen: " + deletedOrderId);
+            var deleteurl = "/Orders/DeleteFromJQuery/?id=" + deletedOrderId;
+            console.log(deleteurl);
 
-                var ok = confirm("Haluatko varmasti poistaa asiakkaan " + deletedOrderId + "?");
+            var ok = confirm("Haluatko varmasti poistaa asiakkaan " + deletedOrderId + "?");
 
-                if (ok == true) {
-                    $.getJSON(deleteurl, null, function (status) {
-                        if (status == true) {
-                            alert("Tilaus on nyt poistettu!");
-                            $('#ModalOrderDelete').modal('hide');
-                            RefreshOrderList();
-                        }
-                        else {
-                            alert("Poistaminen ei onnistunut, yritä uudelleen!");
-                        }
-                    });
-                }
+            if (ok == true) {
+                $.getJSON(deleteurl, null, function (status) {
+                    if (status == true) {
+                        alert("Tilaus on nyt poistettu!");
+                        $('#ModalOrderDelete').modal('hide');
+                        RefreshOrderList();
+                    }
+                    else {
+                        alert("Poistaminen ei onnistunut, yritä uudelleen!");
+                    }
+                });
+            }
         }
 
         function RefreshOrderList() {

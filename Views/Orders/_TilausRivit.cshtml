@@ -46,9 +46,10 @@
                 <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new {id=item.OrderID}) |
-                        @Html.ActionLink("Details", "Details", new {id=item.OrderID}) |
-                        @Html.ActionLink("Delete", "Delete", new {id=item.OrderID})
+                    <a class="btn btn-outline-dark" href="/Order_Details/Edit?OrderID=@item.OrderID&ProductID=@item.ProductID"><img src="~/Icons/pen.svg" width="12" height="12" /></a>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.OrderID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderID })*@
                 </td>
             </tr>
         }

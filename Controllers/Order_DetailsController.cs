@@ -63,22 +63,24 @@ namespace MVCJatkoApp2.Controllers
             return View(order_Details);
         }
 
-        // GET: Order_Details/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? OrderID, int? ProductID)
         {
-            if (id == null)
+            if (OrderID == null || ProductID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order_Details order_Details = db.Order_Details.Find(id);
+
+            Order_Details order_Details = db.Order_Details.Find(OrderID, ProductID);
             if (order_Details == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID", order_Details.OrderID);
             ViewBag.ProductID = new SelectList(db.Products, "ProductID", "ProductName", order_Details.ProductID);
             return View(order_Details);
         }
+
 
         // POST: Order_Details/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -99,17 +101,21 @@ namespace MVCJatkoApp2.Controllers
         }
 
         // GET: Order_Details/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? OrderID, int? ProductID)
         {
-            if (id == null)
+            if (OrderID == null || ProductID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order_Details order_Details = db.Order_Details.Find(id);
+
+            Order_Details order_Details = db.Order_Details.Find(OrderID, ProductID);
             if (order_Details == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID", order_Details.OrderID);
+            ViewBag.ProductID = new SelectList(db.Products, "ProductID", "ProductName", order_Details.ProductID);
             return View(order_Details);
         }
 
@@ -123,6 +129,39 @@ namespace MVCJatkoApp2.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        #region omat ACT
+        // GET: Order_Details
+
+        public ActionResult OneView()
+        {
+            var order_Details = db.Order_Details.Include(o => o.Orders).Include(o => o.Products);
+            return View(order_Details.ToList());
+        }
+
+
+        // POST: Order_Details/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OneEdit([Bind(Include = "OrderID,ProductID,UnitPrice,Quantity,Discount")] Order_Details order_Details)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(order_Details).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID", order_Details.OrderID);
+            ViewBag.ProductID = new SelectList(db.Products, "ProductID", "ProductName", order_Details.ProductID);
+            return View("OneView");
+        }
+
+
+        #endregion
+
+
 
         protected override void Dispose(bool disposing)
         {

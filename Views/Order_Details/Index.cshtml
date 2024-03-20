@@ -11,45 +11,26 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Orders.CustomerID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Products.ProductName)
-        </th>
+
+        <th>@Html.DisplayNameFor(model => model.UnitPrice)</th>
+        <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+        <th>@Html.DisplayNameFor(model => model.Discount)</th>
+        <th>@Html.DisplayNameFor(model => model.Orders.CustomerID)</th>
+        <th>@Html.DisplayNameFor(model => model.Products.ProductName)</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Orders.CustomerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Products.ProductName)
-        </td>
-        <td>
-            <a class="btn btn-outline-dark" href="/Order_Details/Edit?id=@item.OrderID"><img src="~/Icons/pen.svg" width="32" height="32" /></a>
-            <a class="btn btn-outline-dark" href="/Order_Details/Details?id=@item.OrderID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
-            <a class="btn btn-outline-dark" href="/Order_Details/Delete?id=@item.OrderID"><img src="~/Icons/x-circle.svg" width="32" height="32" /></a>
+        <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+        <td>@Html.DisplayFor(modelItem => item.Discount)</td>
+        <td>@Html.DisplayFor(modelItem => item.Orders.CustomerID)</td>
+        <td>@Html.DisplayFor(modelItem => item.Products.ProductName)</td>
+
+        <td>@*----------------------------------------------------   ? Queryn aloitus ja parametrien aliasointi....Edellyttäen että Controllerin koodi on oikein- icon*@
+            <a class="btn btn-outline-dark" href="/Order_Details/Edit?OrderID=@item.OrderID&ProductID=@item.ProductID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
+            <a class="btn btn-outline-dark" href="/Order_Details/Delete?OrderID=@item.OrderID&ProductID=@item.ProductID"><img src="~/Icons/three-dots.svg" width="32" height="32" /></a>
         </td>
     </tr>
 }
